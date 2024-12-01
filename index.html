@@ -6,18 +6,33 @@
     <title>Neo's Sidestore Apps</title>
     <style>
         /* General Styles */
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #9013fe;
+            --background-light: #f8f9fa;
+            --text-light: #333;
+            --background-dark: #121212;
+            --text-dark: #f1f1f1;
+        }
+
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            color: #333;
-            background-color: #f8f9fa;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.light {
+            background-color: var(--background-light);
+            color: var(--text-light);
+        }
+
+        body.dark {
+            background-color: var(--background-dark);
+            color: var(--text-dark);
         }
 
         .container {
-            width: 95%;
+            width: 90%;
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
@@ -25,10 +40,10 @@
 
         /* Header */
         .header {
-            background: linear-gradient(135deg, #4a90e2, #9013fe);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
             text-align: center;
-            padding: 20px 10px;
+            padding: 40px 20px;
         }
 
         .header h1 {
@@ -42,7 +57,7 @@
         }
 
         .search-bar {
-            margin-top: 15px;
+            margin-top: 20px;
             padding: 10px;
             width: 100%;
             max-width: 400px;
@@ -56,15 +71,14 @@
 
         /* Main */
         .main {
-            padding: 20px 10px;
-            flex: 1;
+            padding: 20px 0;
         }
 
         .main h2 {
             text-align: center;
             margin-bottom: 20px;
             font-size: 1.5rem;
-            color: #4a90e2;
+            color: var(--primary-color);
         }
 
         .file-grid {
@@ -74,25 +88,25 @@
         }
 
         .file-card {
-            background: white;
+            background: inherit;
+            border: 1px solid rgba(0, 0, 0, 0.1);
             padding: 15px;
-            border: 1px solid #ddd;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             text-align: center;
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .file-card:hover {
             transform: scale(1.05);
-            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .file-card img {
-            max-width: 60px;
+            max-width: 50px;
             margin-bottom: 10px;
-            border-radius: 10px;
+            border-radius: 5px;
         }
 
         .file-card h3 {
@@ -101,8 +115,9 @@
         }
 
         .file-card p {
-            color: #666;
+            color: inherit;
             margin-bottom: 10px;
+            font-size: 0.9rem;
         }
 
         /* Modal */
@@ -113,35 +128,35 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.7);
             justify-content: center;
             align-items: center;
             z-index: 1000;
         }
 
         .modal-content {
-            background: white;
+            background: inherit;
             padding: 20px;
             border-radius: 8px;
             width: 90%;
-            max-width: 500px;
+            max-width: 400px;
             text-align: center;
-            animation: fadeIn 0.3s ease;
         }
 
         .modal h3 {
-            margin-top: 0;
+            margin: 0;
+            color: inherit;
         }
 
         .modal p {
-            margin: 10px 0;
+            color: inherit;
         }
 
         .modal .btn {
             display: inline-block;
             margin-top: 15px;
             padding: 10px 20px;
-            background: #4a90e2;
+            background: var(--primary-color);
             color: white;
             text-decoration: none;
             border-radius: 5px;
@@ -152,74 +167,28 @@
             background: #3b7fd4;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
         /* Footer */
         .footer {
             background: #333;
             color: white;
             text-align: center;
             padding: 15px 0;
+            font-size: 0.9rem;
         }
 
-        .footer p {
-            margin: 0;
-            font-size: 0.8rem;
-        }
-
-        /* Light/Dark Mode */
-        @media (prefers-color-scheme: dark) {
-            body {
-                color: #ddd;
-                background-color: #121212;
-            }
-
-            .header {
-                background: linear-gradient(135deg, #6a8fe5, #7d4eff);
-            }
-
-            .file-card {
-                background: #1e1e1e;
-                border: 1px solid #444;
-                color: #ccc;
-            }
-
-            .modal-content {
-                background: #222;
-                color: #ddd;
-            }
-
-            .footer {
-                background: #222;
-            }
-        }
-
+        /* Responsive Adjustments */
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 1.8rem;
             }
 
-            .header p {
-                font-size: 0.9rem;
-            }
-
-            .file-card {
-                padding: 10px;
+            .file-card h3 {
+                font-size: 1rem;
             }
         }
     </style>
 </head>
-<body>
-    <!-- Header Section -->
+<body class="light">
     <header class="header">
         <div class="container">
             <h1>Neo's Sidestore Apps</h1>
@@ -229,46 +198,63 @@
     </header>
 
     <!-- Main Content Section -->
-    <main class="main">
-        <div class="container">
-            <h2>Available Apps</h2>
-            <div class="file-grid" id="fileGrid">
-                <!-- App Cards -->
-                <div class="file-card" onclick="showPreview('Discord', 'Enmity', '254.0', 'Enmity Development Team', 'https://github.com/neoarz/Neos-Sidestore-Apps/raw/main/assets/Discord.ipa')">
-                    <img src="https://github.com/neoarz/Neos-Sidestore-Apps/raw/main/Icons/Discord.png" alt="Discord Icon">
-                    <h3>Discord</h3>
-                    <p>Enmity</p>
-                </div>
-                <div class="file-card" onclick="showPreview('ESign', 'N/A', '5.0.2', 'u/Sharp_Listen3436 & yyy', 'https://github.com/neoarz/Neos-Sidestore-Apps/raw/main/assets/ESign.ipa')">
-                    <img src="https://github.com/neoarz/Neos-Sidestore-Apps/raw/main/Icons/Esign.png" alt="ESign Icon">
-                    <h3>ESign</h3>
-                    <p>N/A</p>
-                </div>
-                <div class="file-card" onclick="showPreview('Feather', 'N/A', '1.1.3', 'Samara', 'https://github.com/neoarz/Neos-Sidestore-Apps/raw/main/assets/Feather.ipa')">
-                    <img src="https://github.com/neoarz/Neos-Sidestore-Apps/raw/main/Icons/Feather.png" alt="Feather Icon">
-                    <h3>Feather</h3>
-                    <p>N/A</p>
-                </div>
-                <div class="file-card" onclick="showPreview('Instagram', 'Rocket Cracked', '344.0.9', 'Meta', 'https://github.com/neoarz/Neos-Sidestore-Apps/raw/main/assets/Instagram.ipa')">
-                    <img src="https://github.com/neoarz/Neos-Sidestore-Apps/raw/main/Icons/Instagram.png" alt="Instagram Icon">
-                    <h3>Instagram</h3>
-                    <p>Rocket Cracked</p>
-                </div>
-                <div class="file-card" onclick="showPreview('Sparsebox', 'On device Toolbox', '1.0', 'khanhduytran0', 'https://github.com/neoarz/Neos-Sidestore-Apps/raw/main/assets/Sparsebox.ipa')">
-                    <img src="https://github.com/neoarz/Neos-Sidestore-Apps/raw/main/Icons/Sparsebox.png" alt="Sparsebox Icon">
-                    <h3>Sparsebox</h3>
-                    <p>On device Toolbox</p>
-                </div>
-                <div class="file-card" onclick="showPreview('Spotify', 'Eevee Spotify', '8.9.94', 'whoeevee', 'https://github.com/neoarz/Neos-Sidestore-Apps/raw/main/assets/Spotify.ipa')">
-                    <img src="https://github.com/neoarz/Neos-Sidestore-Apps/raw/main/Icons/Spotify.png" alt="Spotify Icon">
-                    <h3>Spotify</h3>
-                    <p>Eevee Spotify</p>
-                </div>
+<main class="main">
+    <div class="container">
+        <h2>Available Apps</h2>
+        <div class="file-grid" id="fileGrid">
+            <!-- App Card: Discord -->
+            <div class="file-card" onclick="showPreview('Discord', 'Enmity', '254.0', 'Enmity Development Team', 'https://github.com/neoarz/Neos-Sidestore-Apps/raw/main/assets/Discord.ipa')">
+                <img src="https://github.com/neoarz/Neos-Sidestore-Apps/raw/main/Icons/Discord.png" alt="Discord Icon">
+                <h3>Discord</h3>
+                <p>Enmity</p>
+            </div>
+            <!-- App Card: ESign -->
+            <div class="file-card" onclick="showPreview('ESign', 'N/A', '5.0.2', 'u/Sharp_Listen3436 & yyy', 'https://github.com/neoarz/Neos-Sidestore-Apps/raw/main/assets/ESign.ipa')">
+                <img src="https://github.com/neoarz/Neos-Sidestore-Apps/raw/main/Icons/Esign.png" alt="ESign Icon">
+                <h3>ESign</h3>
+                <p>N/A</p>
+            </div>
+            <!-- App Card: Feather -->
+            <div class="file-card" onclick="showPreview('Feather', 'N/A', '1.1.3', 'Samara', 'https://github.com/neoarz/Neos-Sidestore-Apps/raw/main/assets/Feather.ipa')">
+                <img src="https://github.com/neoarz/Neos-Sidestore-Apps/raw/main/Icons/Feather.png" alt="Feather Icon">
+                <h3>Feather</h3>
+                <p>N/A</p>
+            </div>
+            <!-- App Card: Instagram -->
+            <div class="file-card" onclick="showPreview('Instagram', 'Rocket Cracked', '344.0.9', 'Meta', 'https://github.com/neoarz/Neos-Sidestore-Apps/raw/main/assets/Instagram.ipa')">
+                <img src="https://github.com/neoarz/Neos-Sidestore-Apps/raw/main/Icons/Instagram.png" alt="Instagram Icon">
+                <h3>Instagram</h3>
+                <p>Rocket Cracked</p>
+            </div>
+            <!-- App Card: Sparsebox -->
+            <div class="file-card" onclick="showPreview('Sparsebox', 'On device Toolbox', '1.0', 'khanhduytran0', 'https://github.com/neoarz/Neos-Sidestore-Apps/raw/main/assets/Sparsebox.ipa')">
+                <img src="https://github.com/neoarz/Neos-Sidestore-Apps/raw/main/Icons/Sparsebox.png" alt="Sparsebox Icon">
+                <h3>Sparsebox</h3>
+                <p>On device Toolbox</p>
+            </div>
+            <!-- App Card: Spotify -->
+            <div class="file-card" onclick="showPreview('Spotify', 'Eevee Spotify', '8.9.94', 'whoeevee', 'https://github.com/neoarz/Neos-Sidestore-Apps/raw/main/assets/Spotify.ipa')">
+                <img src="https://github.com/neoarz/Neos-Sidestore-Apps/raw/main/Icons/Spotify.png" alt="Spotify Icon">
+                <h3>Spotify</h3>
+                <p>Eevee Spotify</p>
+            </div>
+            <!-- App Card: YouTube -->
+            <div class="file-card" onclick="showPreview('YouTube', 'uYou+', '19.08.2-3.0.3', 'MiRO92', 'https://github.com/neoarz/Neos-Sidestore-Apps/raw/main/assets/YouTube.ipa')">
+                <img src="https://github.com/neoarz/Neos-Sidestore-Apps/raw/main/Icons/Youtube.png" alt="YouTube Icon">
+                <h3>YouTube</h3>
+                <p>uYouPlus</p>
+            </div>
+            <!-- App Card: Nugget -->
+            <div class="file-card" onclick="showPreview('Nugget', 'iOS on-device version of Nugget', '2.0', 'leminlimez', 'https://github.com/neoarz/Neos-Sidestore-Apps/raw/main/assets/Nugget.ipa')">
+                <img src="https://github.com/neoarz/Neos-Sidestore-Apps/raw/main/Icons/nugget.png" alt="Nugget Icon">
+                <h3>Nugget</h3>
+                <p>On device Toolbox</p>
             </div>
         </div>
-    </main>
+    </div>
+</main>
 
-    <!-- Modal -->
+
     <div class="modal" id="previewModal" onclick="closeModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <h3 id="modalTitle">File Name</h3>
@@ -279,18 +265,14 @@
         </div>
     </div>
 
-    <!-- Footer Section -->
     <footer class="footer">
-        <div class="container">
-            <p>&copy; 2024 File Download Center. All Rights Reserved.</p>
-        </div>
+        <p>&copy; 2024 Neo's Sidestore Apps. All Rights Reserved.</p>
     </footer>
 
     <script>
         function searchFiles() {
             const query = document.getElementById('searchBar').value.toLowerCase();
             const fileCards = document.querySelectorAll('.file-card');
-
             fileCards.forEach(card => {
                 const title = card.querySelector('h3').textContent.toLowerCase();
                 card.style.display = title.includes(query) ? 'block' : 'none';
@@ -311,6 +293,12 @@
                 document.getElementById('previewModal').style.display = 'none';
             }
         }
+
+        // Auto-detect theme and apply
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.body.classList.toggle('dark', prefersDark);
+        document.body.classList.toggle('light', !prefersDark);
     </script>
 </body>
 </html>
+
